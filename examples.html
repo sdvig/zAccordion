@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>zAccordion Examples</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="js/jquery.zaccordion.js"></script>
+		<style type="text/css">
+			/* Just some styles to set the page layout. */
+			* {margin:0;padding:0;font-family:Arial, Verdana, sans-serif;}
+			body {padding:20px;}
+			h1 {font-size:18px;margin:20px 0;}
+			h2 {font-size:14px;margin:20px 0;}
+			h3 {font-size:14px;margin:20px 0;}
+			p {font-size:12px;margin:20px 0;}
+			a {font-size:12px;}
+			#container {width:960px;margin:0 auto;}
+			pre {font-family:"Courier New", Courier, monospace;font-size:12px;margin:20px 0;}
+			
+			/* Used in Example 3 */
+			#example3 ul {list-style:none;}
+			#example3 h3 {color:#fff;text-transform:uppercase;font-size:24px;}
+			#example3 p {color:#fff;}
+			#example3 .frame-1 {background:url(images/slide1.gif) top left repeat;}
+			#example3 .frame-2 {background:url(images/slide2.gif) top left repeat;}
+			#example3 .frame-3 {background:url(images/slide3.gif) top left repeat;}
+			#example3 .frame-4 {background:url(images/slide4.gif) top left repeat;}
+			#example3 .frame-content {width:360px;padding:100px 120px;}
+			#example3 .frame-closed .frame-content {display:none;}
+			#example3 .frame-open .frame-content {display:block;}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<h1>zAccordion Examples</h1>
+			<h2>Example 1</h2>
+			<ul id="example1">
+				<li>
+					<img src="images/slide1.gif" width="600" height="270" alt="" />
+				</li>
+				<li>
+					<img src="images/slide2.gif" width="600" height="270" alt="" />
+				</li>
+				<li>
+					<img src="images/slide3.gif" width="600" height="270" alt="" />
+				</li>
+				<li>
+					<img src="images/slide4.gif" width="600" height="270" alt="" />
+				</li>
+				<li>
+					<img src="images/slide5.gif" width="600" height="270" alt="" />
+				</li>
+			</ul>
+			<p>Each slide is 600 x 270 pixels. I&#39;ve set the <em>width</em> of the accordion to 960 and the <em>slideWidth</em> to 600. The size of the tabs will be calculated automatically. This is probably the best way to fire the accordion.</p>
+			<pre>
+$(document).ready(function() {
+	$("#example1").zAccordion({
+		timeout: 4000,
+		slideWidth: 600,
+		width: 960,
+		height: 270
+	});
+});
+			</pre>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$("#example1").zAccordion({
+						timeout: 4000,
+						slideWidth: 600,
+						width: 960,
+						height: 270
+					});
+				});
+			</script>
+			<h2>Example 2</h2>
+			<ul id="example2">
+				<li>
+					<img src="images/slide1.gif" width="500" height="220" alt="" />
+				</li>
+				<li>
+					<img src="images/slide2.gif" width="500" height="220" alt="" />
+				</li>
+				<li>
+					<img src="images/slide3.gif" width="500" height="220" alt="" />
+				</li>
+			</ul>
+			<p>Each slide is 500 x 220 pixels. I&#39;ve set the <em>width</em> of the accordion to 780 and the <em>tabWidth</em> to 150. The size of the slides will be calculated automatically.</p>
+			<p>The starting slide is set to 1 (the second slide of slides 0, 1, and 2). The accordion does not auto play. I&#39;ve also set the accordion to trigger on <em>mouseover</em>.</p>
+			<pre>
+$(document).ready(function() {
+	$("#example2").zAccordion({
+		startingSlide: 1,
+		auto: false,
+		speed: 100,
+		tabWidth: 150,
+		width: 780,
+		height: 220
+	});
+});
+			</pre>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$("#example2").zAccordion({
+						startingSlide: 1,
+						auto: false,
+						speed: 100,
+						tabWidth: 150,
+						width: 780,
+						height: 220,
+						trigger: "mouseover"
+					});
+				});
+			</script>
+			<h2>Example 3</h2>
+			<div id="example3">
+				<div class="frame-1">
+					<div class="frame-content">
+						<h3>Lorem ipsum dolor sit</h3>
+						<p>Vivamus vel neque nec est hendrerit aliquet. Donec sed cursus sapien. Aenean auctor egestas turpis nec aliquam.</p>
+					</div>
+				</div>
+				<div class="frame-2">
+					<div class="frame-content">
+						<h3>Donec a elit nisi</h3>
+						<p>Proin sit amet massa vel elit pulvinar hendrerit eu nec odio. Maecenas faucibus odio sit amet nunc semper accumsan.</p>
+					</div>
+				</div>
+				<div class="frame-3">
+					<div class="frame-content">
+						<h3>Duis vitae suscipit neque</h3>
+						<p>Nunc porta commodo dolor, in vestibulum neque ullamcorper non. Nunc elementum ante in metus mollis sit amet consequat justo facilisis.</p>
+					</div>
+				</div>
+				<div class="frame-4">
+					<div class="frame-content">
+						<h3>Aliquam erat volutpat</h3>
+						<p>Donec in quam purus, eget placerat elit. Vivamus feugiat tincidunt elit, varius tincidunt erat scelerisque id. Morbi aliquam dui bibendum est viverra ultrices.</p>
+					</div>
+				</div>
+			</div>
+			<div id="thumbs">
+				<a href="#" class="thumb-0">Start</a> <a href="#" class="thumb-1">1</a> <a href="#" class="thumb-2">2</a> <a href="#" class="thumb-3">3</a> <a href="#" class="thumb-4">4</a> <a href="#" class="thumb-5">Stop</a>
+			</div>
+			<p>This is probably the most practical example. Each slide has its own class and custom background image. I&#39;ve set the text inside each of the slides to display only for the class with the open slide. I&#39;ve also customized the slide class names. The JavaScript and CSS are below:</p>
+			<pre>
+$(document).ready(function() {
+	var accordion = $("#example3").zAccordion({
+		slideWidth: 600,
+		width: 900,
+		height: 350,
+		timeout: 3000,
+		slideClass: "frame",
+		slideOpenClass: "frame-open",
+		slideClosedClass: "frame-closed",
+		easing: "easeOutCirc"
+	});
+	$("#thumbs .thumb-0").click(function(){
+		accordion.start();
+		return false;
+	});
+	$("#thumbs .thumb-1").click(function(){
+		accordion.click(0);
+		return false;
+	});
+	$("#thumbs .thumb-2").click(function(){
+		accordion.click(1);
+		return false;
+	});
+	$("#thumbs .thumb-3").click(function(){
+		accordion.click(2);
+		return false;
+	});
+	$("#thumbs .thumb-4").click(function(){
+		accordion.click(3);
+		return false;
+	});
+	$("#thumbs .thumb-5").click(function(){
+		accordion.stop();
+		return false;
+	});
+});
+			</pre>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					var accordion = $("#example3").zAccordion({
+						slideWidth: 600,
+						width: 900,
+						height: 350,
+						timeout: 3000,
+						slideClass: "frame",
+						slideOpenClass: "frame-open",
+						slideClosedClass: "frame-closed",
+						easing: "easeOutCirc"
+					});
+					$("#thumbs .thumb-0").click(function(){
+						accordion.start();
+						return false;
+					});
+					$("#thumbs .thumb-1").click(function(){
+						accordion.click(0);
+						return false;
+					});
+					$("#thumbs .thumb-2").click(function(){
+						accordion.click(1);
+						return false;
+					});
+					$("#thumbs .thumb-3").click(function(){
+						accordion.click(2);
+						return false;
+					});
+					$("#thumbs .thumb-4").click(function(){
+						accordion.click(3);
+						return false;
+					});
+					$("#thumbs .thumb-5").click(function(){
+						accordion.stop();
+						return false;
+					});
+				});
+			</script>
+			<pre>
+#example3 ul {list-style:none;}
+#example3 h3 {color:#fff;text-transform:uppercase;font-size:24px;}
+#example3 p {color:#fff;}
+#example3 .frame-1 {background:url(images/slide1.gif) top left repeat;}
+#example3 .frame-2 {background:url(images/slide2.gif) top left repeat;}
+#example3 .frame-3 {background:url(images/slide3.gif) top left repeat;}
+#example3 .frame-4 {background:url(images/slide4.gif) top left repeat;}
+#example3 .frame-content {width:360px;padding:100px 120px;}
+#example3 .frame-closed .frame-content {display:none;}
+#example3 .frame-open .frame-content {display:block;}
+			</pre>
+		</div>
+	</body>
+</html>
