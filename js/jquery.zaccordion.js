@@ -1,7 +1,7 @@
 /*
 	jQuery zAccordion Plugin
 	Copyright 2010 - 2011 - Nate Armagost - http://www.armagost.com/zaccordion
-	Version 1.1.0
+	Version 1.1.1
 	Licensed under the MIT and GPL licenses
 */
 (function($){
@@ -73,7 +73,6 @@
 			}
 			defaults.animate = options.slideWidth - options.tabWidth; /* Number of pixels yet do be displayed on a hidden slide */
 			var interval = null;
-			defaults.stop = false;
 			defaults.inside = false; /* Determines whether or not the mouse is inside the container.  Container should pause on hover if needed. */
 			defaults.current = defaults.startingSlide;
 			var options = $.extend(defaults, options);
@@ -87,11 +86,11 @@
 			};
 			this.stop = function() { /* This will stop the accordion unless the slides are clicked, however, it will not resume the autoplay */
 				clearTimeout(interval);
-				defaults.stop = true;
+				defaults.auto = false;
 			};
 			this.start = function() { /* This will start the accordion back up if it has been stopped */
 				clearTimeout(interval);
-				defaults.stop = false;
+				defaults.auto = true;
 				var s = $(this).children().get(0).tagName + "." + defaults.slideOpenClass;
 				this.click($(this).children(s).index() + 1);
 			};
@@ -168,7 +167,6 @@
 					"position": "relative",
 					"overflow": "hidden"
 				});
-
 				/* If the container is a list, get rid of any bullets */
 				if ((obj.get(0).tagName == "UL") || (obj.get(0).tagName == "OL")) {
 					obj.css({
@@ -187,7 +185,7 @@
 					try{
 						clearTimeout(interval);
 					} catch(e){}
-					if (o.auto && !o.stop) {
+					if (o.auto) {
 						interval = setTimeout(function(){
 							o.current = obj.children(obj.children().get(0).tagName + "." + o.slideOpenClass).index() + 1;
 							var next = o.current + 1;
@@ -198,7 +196,7 @@
 						}, o.timeout );
 					}
 				});
-				/* Set up the listener to change slides when clicked */
+				/* Set up the listener to change slides when triggered */
 				obj.children(obj.children().get(0).tagName + "." + o.slideClass).bind(o.trigger, function() {
 					/* Don't do anything if the slide is already open */
 					if (!($(this).hasClass(o.slideOpenClass))) {
@@ -206,7 +204,7 @@
 						try{
 							clearTimeout(interval);
 						} catch(e){}
-						if (!o.inside && !o.stop) {
+						if (!o.inside && o.auto) {
 							interval = setTimeout(function(){
 								o.current = obj.children(obj.children().get(0).tagName + "." + o.slideOpenClass).index() + 1;
 								var next = o.current + 1;
@@ -219,35 +217,35 @@
 						obj.children(obj.children().get(0).tagName + "." + o.slidePreviousClass).removeClass(o.slidePreviousClass);
 						obj.children(obj.children().get(0).tagName + "." + o.slideOpenClass).addClass(o.slidePreviousClass);
 						obj.children(obj.children().get(0).tagName + "." + o.slideClass).addClass(o.slideClosedClass).removeClass(o.slideOpenClass).css("cursor", "pointer"); /* Remove the open class from all the slide tabs */
-						$(this).addClass(o.slideOpenClass).removeClass(o.slideClosedClass).css("cursor", "default"); /* Add the open class to the slide tab that was just clicked */
-						var index = $(this).index() + 1; /* The index refers to the actual slide number that was clicked (no zeros) */
+						$(this).addClass(o.slideOpenClass).removeClass(o.slideClosedClass).css("cursor", "default"); /* Add the open class to the slide tab that was just triggered */
+						var index = $(this).index() + 1; /* The index refers to the actual slide number that was triggered (no zeros) */
 						if (o.click != null) {
 							o.click();
 						}
 						if (!o.invert) {
-							obj.children(obj.children().get(0).tagName + ":nth-child(" + index + ")").animate(
+							obj.children(obj.children().get(0).tagName + ":nth-child(" + index + ")").stop().animate(
 								{ left: originals[index-1] + "px" }, o.speed, o.easing, o.open);
 						} else {
-							obj.children(obj.children().get(0).tagName + ":nth-child(" + index + ")").animate(
+							obj.children(obj.children().get(0).tagName + ":nth-child(" + index + ")").stop().animate(
 								{ right: originals[index-1] + "px" }, o.speed, o.easing, o.open);
 						}
 						/* Closing other slides */
 						for (var i = 1;i <= originals.length;i++) {
 							if (i < index) {
 								if (!o.invert) {
-									obj.children(obj.children().get(0).tagName + ":nth-child(" + i + ")").animate(
+									obj.children(obj.children().get(0).tagName + ":nth-child(" + i + ")").stop().animate(
 										{ left: originals[i-1] + "px" }, o.speed, o.easing, o.close);
 								} else {
-									obj.children(obj.children().get(0).tagName + ":nth-child(" + i + ")").animate(
+									obj.children(obj.children().get(0).tagName + ":nth-child(" + i + ")").stop().animate(
 										{ right: o.width - (i * o.tabWidth) + "px" }, o.speed, o.easing, o.close);
 								}
 							}
 							if (i > index) {
 								if (!o.invert) {
-									obj.children(obj.children().get(0).tagName + ":nth-child(" + i + ")").animate(
+									obj.children(obj.children().get(0).tagName + ":nth-child(" + i + ")").stop().animate(
 										{ left: originals[i-1] + o.animate + "px" }, o.speed, o.easing, o.close);
 								} else {
-									obj.children(obj.children().get(0).tagName + ":nth-child(" + i + ")").animate(
+									obj.children(obj.children().get(0).tagName + ":nth-child(" + i + ")").stop().animate(
 										{ right: (originals.length - i) * o.tabWidth + "px" }, o.speed, o.easing, o.close);
 								}
 							}
@@ -256,7 +254,7 @@
 					}
 				});
 				/* Set up the original timer */
-				if (o.auto && !o.stop) {
+				if (o.auto) {
 					interval = setTimeout(function(){
 						o.current = obj.children(obj.children().get(0).tagName + "." + o.slideOpenClass).index() + 1;
 						var next = o.current + 1;
