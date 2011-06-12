@@ -1,7 +1,7 @@
 /*
 	jQuery zAccordion Plugin
 	Copyright 2010 - 2011 - Nate Armagost - http://www.armagost.com/zaccordion
-	Version 1.1.1
+	Version 1.1.2
 	Licensed under the MIT and GPL licenses
 */
 (function($){
@@ -22,13 +22,14 @@
 				slidePreviousClass: "slide-previous", /* Class of the slide that was previously open before a new one was triggered */
 				easing: null, /* Easing method */
 				speed: 1200, /* Speed of the slide transition (in ms) */
-				open: null, /* Callback function for opening slide */
-				close: null, /* Callback function for closing slides */
+				open: function() {}, /* Callback function for opening slide */
+				close: function() {}, /* Callback function for closing slides */
 				auto: true, /* Whether or not the slideshow should play automatically */
 				trigger: "click", /* Event type that will bind to the "tab" (click, mouseover, etc.) */
 				pause: true, /* Pause on hover */
-				click: null, /* Function called on click */
-				invert: false /* Whether or not to invert the slideshow, so the last slide stays in the same position, rather than the first slide */
+				click: function() {}, /* Function called on click */
+				invert: false, /* Whether or not to invert the slideshow, so the last slide stays in the same position, rather than the first slide */
+				afterBuild: function() {} /* Function called after the accordion is finished building */
 			};
 			/* Measuring the height */
 			if ((options.height == undefined) && (options.slideHeight == undefined)) {
@@ -264,6 +265,7 @@
 						obj.children(obj.children().get(0).tagName + ":nth-child(" + next + ")").trigger(o.trigger);
 					}, o.timeout );
 				}
+				o.afterBuild();
 			});
 		}
 	});
